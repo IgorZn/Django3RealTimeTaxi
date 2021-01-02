@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.postgres',
     'django.contrib.staticfiles',
+
+    'channels',
     'rest_framework',
     'trips',
 ]
@@ -72,6 +74,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'taxi.wsgi.application'
+ASGI_APPLICATION = 'taxi.routing.application'
 
 
 # Database
