@@ -1,6 +1,7 @@
-from channels.layers import get_channel_layer
-from channels.testing import WebsocketCommunicator
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
+from channels.db import database_sync_to_async
+from django.contrib.auth.models import AnonymousUser
+
 
 TEST_CHANNEL_LAYERS = {
 	'default': {
@@ -12,6 +13,10 @@ TEST_CHANNEL_LAYERS = {
 class TaxiConsumer(AsyncJsonWebsocketConsumer):
 	groups = ['test']
 
+	@database_sync_to_async
+	def _get_user_group(self, user):
+		return user.groups.first().name
+
 	async def connect(self):
 		# получить пользователя из scope
 		user = self.scope['user']
@@ -20,17 +25,25 @@ class TaxiConsumer(AsyncJsonWebsocketConsumer):
 		if user.is_anonymous:
 			await self.close()
 		else:
-			await self.channel_layer.group_add(
-				group='test',
-				channel=self.channel_name
-			)
+			user_group = await self._get_user_group(user)
+			if user_group == 'driver':
+				await self.channel_layer.group_add(
+					group='drivers',
+					channel=self.channel_name
+				)
 			await self.accept()
 
 	async def disconnect(self, code):
-		await self.channel_layer.group_discard(
-			group='test',
-			channel=self.channel_name
-		)
+		user = self.scope['user']
+		print('disconnect__code:', code)
+		print('disconnect__user:', user)
+		if not isinstance(user, AnonymousUser):
+			user_group = await self._get_user_group(user)
+			if user_group == 'driver':
+				await self.channel_layer.group_discard(
+					group='drivers',
+					channel=self.channel_name
+				)
 		await super().disconnect(code)
 
 	async def receive_json(self, content, **kwargs):
