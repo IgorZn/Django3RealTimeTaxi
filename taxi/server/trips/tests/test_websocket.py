@@ -142,8 +142,6 @@ class TestWebSocket:
 		await communicator.disconnect()
 
 	async def test_request_trip(self, settings):
-
-
 		settings.CHANNEL_LAYERS = TEST_CHANNEL_LAYERS
 		user, access = await create_user()
 
@@ -267,7 +265,6 @@ class TestWebSocket:
 
 		# Listen for messages as rider.
 		channel_layer = get_channel_layer()
-		print(channel_layer)
 		await channel_layer.group_add(
 			group=trip_id,
 			channel='test_channel'
@@ -293,6 +290,70 @@ class TestWebSocket:
 		response = await channel_layer.receive('test_channel')
 		response_data = response.get('data')
 		assert response_data['id'] == trip_id
+		assert response_data['rider']['username'] == rider.username
+		assert response_data['driver']['username'] == driver.username
+
+		await communicator.disconnect()
+
+	async def test_driver_join_trip_group_on_connect(self, settings):
+		settings.CHANNEL_LAYERS = TEST_CHANNEL_LAYERS
+		user, access = await create_user(group='driver')
+		trip = await create_trip(driver=user)
+
+		communicator = self._communicator(access)
+		connected, _ = await communicator.connect()
+
+		# Send a message to the trip group.
+		message = {
+			'type': 'echo.message',
+			'data': 'This is a test message.',
+		}
+		channel_layer = get_channel_layer()
+		await channel_layer.group_send(f'{trip.id}', message=message)
+
+		# Rider receives message.
+		response = await communicator.receive_json_from()
+		assert response == message
+
+		await communicator.disconnect()
+
+	async def test_rider_cancels_his_request_after_a_driver_accepts_it(self, settings):
+		settings.CHANNEL_LAYERS = TEST_CHANNEL_LAYERS
+
+		# Create trip request.
+		rider, access = await create_user()
+		trip = await create_trip(rider=rider)
+		trip_id = f'{trip.id}'
+
+		# Listen for messages as rider.
+		channel_layer = get_channel_layer()
+		await channel_layer.group_add(
+			group=trip_id,
+			channel='test_channel'
+		)
+
+		# Cancel trip.
+		driver, _ = await create_user(username='test.driver@example.com', group='driver')
+
+		communicator = self._communicator(access)
+		connected, _ = await communicator.connect()
+		message = {
+			'type': 'cancel.trip',
+			'data': {
+				'id': trip_id,
+				'pick_up_address': trip.pick_up_address,
+				'drop_off_address': trip.drop_off_address,
+				'status': Trip.CANCELED,
+				'driver': driver.id,
+			},
+		}
+		await communicator.send_json_to(message)
+
+		# Driver receives message.
+		response = await channel_layer.receive('test_channel')
+		response_data = response.get('data')
+		assert response_data['id'] == trip_id
+		assert response_data['status'] == 'CANCELED'
 		assert response_data['rider']['username'] == rider.username
 		assert response_data['driver']['username'] == driver.username
 

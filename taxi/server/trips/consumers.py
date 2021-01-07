@@ -27,6 +27,7 @@ class TaxiConsumer(AsyncJsonWebsocketConsumer):
 	@sync_to_async
 	def _get_trip_ids(self, user):
 		user_groups = user.groups.values_list('name', flat=True)
+		print('_get_trip_ids__user_groups', user_groups)
 		if 'driver' in user_groups:
 			trip_ids = user.trips_as_driver.exclude(status=Trip.COMPLETED).only('id').values_list('id', flat=True)
 		else:
@@ -40,6 +41,14 @@ class TaxiConsumer(AsyncJsonWebsocketConsumer):
 	@sync_to_async
 	def _update_trip(self, data):
 		instance = Trip.objects.get(id=data.get('id'))
+		serializer = TripSerializer(data=data)
+		serializer.is_valid(raise_exception=True)
+		return serializer.update(instance, serializer.validated_data)
+
+	@sync_to_async
+	def _cancel_trip(self, data):
+		instance = Trip.objects.get(id=data.get('id'))
+		instance.status = data.get('status')
 		serializer = TripSerializer(data=data)
 		serializer.is_valid(raise_exception=True)
 		return serializer.update(instance, serializer.validated_data)
@@ -95,6 +104,8 @@ class TaxiConsumer(AsyncJsonWebsocketConsumer):
 			await self.echo_message(content)
 		elif message_type == 'update.trip':
 			await self.update_trip(content)
+		elif message_type == 'cancel.trip':
+			await self.cancel_trip(content)
 
 	async def create_trip(self, message):
 		print('create_trip', message)
@@ -144,6 +155,33 @@ class TaxiConsumer(AsyncJsonWebsocketConsumer):
 			'type': 'echo.message',
 			'data': trip_data
 		})
+
+	async def cancel_trip(self, message):
+		data = message.get('data')
+		trip = await self._cancel_trip(data)
+		trip_id = f'{trip.id}'
+		trip_data = NestedTripSerializer(trip).data
+
+		# Send update to driver.
+		await self.channel_layer.group_send(
+			group=trip_id,
+			message={
+				'type': 'echo.message',
+				'data': trip_data,
+			}
+		)
+
+		# Remove driver from the trip group.
+		await self.channel_layer.group_discard(
+			group='drivers',
+			channel=self.channel_name
+		)
+
+		await self.send_json({
+			'type': 'echo.message',
+			'data': trip_data
+		})
+
 
 	async def echo_message(self, message):
 		print('echo_message__message', message)
