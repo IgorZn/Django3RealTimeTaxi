@@ -1,3 +1,4 @@
+import os
 import pytest
 from channels.testing import WebsocketCommunicator
 
@@ -16,6 +17,8 @@ TEST_CHANNEL_LAYERS = {
 	},
 }
 
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
+
 
 @database_sync_to_async
 def create_user(username='test.user@example.com', password='pAssw0rd', group='rider'):
@@ -27,13 +30,16 @@ def create_user(username='test.user@example.com', password='pAssw0rd', group='ri
 
 	# Create user group
 	user_group, _ = Group.objects.get_or_create(name=group)
-	print('\tuser_group:', user_group)
+	print('\nuser_group:', user_group)
 	user.groups.add(user_group)
 	user.save()
 
 	# Create access token
 	access = AccessToken.for_user(user)
-	print(user, access)
+	print('user', user)
+	print('user.id', user.id)
+	print('user.groups.first().pk', user.groups.first().pk)
+	print('access', access)
 
 	return user, access
 
@@ -112,4 +118,31 @@ class TestWebSocket:
 		await channel_layer.group_send('drivers', message=message)
 		response = await communicator.receive_json_from()
 		assert response == message
+		await communicator.disconnect()
+
+	async def test_request_trip(self, settings):
+
+
+		settings.CHANNEL_LAYERS = TEST_CHANNEL_LAYERS
+		user, access = await create_user()
+
+		communicator = self._communicator(access)
+		connected, _ = await communicator.connect()
+
+		await communicator.send_json_to({
+			'type': 'create.trip',
+			'data': {
+				'pick_up_address': '123 Main Street',
+				'drop_off_address': '456 Piney Road',
+				'rider': user.id,
+			},
+		})
+		response = await communicator.receive_json_from()
+		response_data = response.get('data')
+		assert response_data['id'] is not None
+		assert response_data['pick_up_address'] == '123 Main Street'
+		assert response_data['drop_off_address'] == '456 Piney Road'
+		assert response_data['status'] == 'REQUESTED'
+		assert response_data['rider']['username'] == user.username
+		assert response_data['driver'] is None
 		await communicator.disconnect()
