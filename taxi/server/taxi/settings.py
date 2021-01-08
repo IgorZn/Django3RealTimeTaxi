@@ -154,3 +154,13 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
     'USER_ID_CLAIM': 'id',
 }
+
+# The MEDIA_ROOT is the path to the directory where file uploads will be saved.
+# For the purpose of this tutorial, we can create a “media” folder inside our
+# “server” directory. In a production environment, we’d specify an absolute
+# path to a directory on the server or we’d store files with a service like AWS S3.
+# The MEDIA_URL is the prefix to use in our URL path
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = BASE_DIR / 'media'

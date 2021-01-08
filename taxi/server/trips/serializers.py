@@ -27,6 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
 			key: value for key, value in validated_data.items()
 			if key not in ('password1', 'password2')
 		}
+
 		data['password'] = validated_data['password1']
 		user = self.Meta.model.objects.create_user(**data)
 		user.groups.add(group)
@@ -37,7 +38,7 @@ class UserSerializer(serializers.ModelSerializer):
 		model = get_user_model()
 		fields = (
 			'id', 'username', 'password1', 'password2',
-			'first_name', 'last_name', 'group',
+			'first_name', 'last_name', 'group', 'photo',
 		)
 		read_only_fields = ('id',)
 
