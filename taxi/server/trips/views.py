@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 
 from django.contrib.auth import get_user_model
-from rest_framework import generics
+from django.db.models import Q
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics, permissions, viewsets
 
@@ -26,3 +26,13 @@ class TripView(viewsets.ReadOnlyModelViewSet):
 	permission_classes = (permissions.IsAuthenticated,)
 	queryset = Trip.objects.all()
 	serializer_class = TripSerializer
+
+	def get_queryset(self):
+		user = self.request.user
+		if user.group == 'driver':
+			return Trip.objects.filter(
+				Q(status=Trip.REQUESTED) | Q(driver=user)
+			)
+		if user.group == 'rider':
+			return Trip.objects.filter(rider=user)
+		return Trip.objects.none()
