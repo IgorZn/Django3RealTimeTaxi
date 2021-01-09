@@ -11,9 +11,11 @@ On notebook:
 ### Postgres
 Create a new database and user with the following commands:
 
+`su postgres` <br />
+`createdb -U postgres` <br />
 `psql -U postgres` <br />
-`postgres=# CREATE USER taxi WITH SUPERUSER CREATEDB CREATEROLE PASSWORD "taxi";` <br />
-`postgres=# CREATE DATABASE taxi OWNER taxi` <br />
+`<WHAT EVER NAME> =# CREATE USER taxi WITH SUPERUSER CREATEDB CREATEROLE PASSWORD 'taxi';` <br />
+`<WHAT EVER NAME> =# CREATE DATABASE taxi OWNER taxi;` <br />
 
 ### In my case
 

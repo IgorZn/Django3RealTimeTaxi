@@ -1,0 +1,34 @@
+version: '3.7'
+
+services:
+
+  taxi-redis:
+    container_name: taxi-redis
+    image: redis:5.0.7-alpine
+    ports:
+      - 6379:6379
+
+  taxi-cypress:
+    image: cypress/browsers:node12.18.3-chrome87-ff82
+    volumes:
+      - ./taxi/client/cypress:/app/cypress
+      - ./taxi/client/cypress.json:/app/cypress.json
+
+  taxi-database:
+    container_name: taxi-database
+    image: igorzna/postgres:12.1-TAXI-APP
+    ports:
+      - 5433:5432
+    volumes:
+      - ./taxi/server/taxi-database:/var/lib/postgresql/data
+    environment:
+      - PGDATABASE=taxi
+      - PGUSER=taxi
+      - PGPASSWORD=taxi
+      - PGHOST=taxi-database
+      - REDIS_URL=redis://taxi-redis:6379/0
+
+volumes:
+  taxi-database:
+  media:
+  static:
