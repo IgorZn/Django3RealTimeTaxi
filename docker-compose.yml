@@ -9,7 +9,11 @@ services:
       - 6379:6379
 
   taxi-cypress:
-    image: cypress/browsers:node12.18.3-chrome87-ff82
+    build:
+      context: ./taxi/client
+      dockerfile: Dockerfile.cypress
+    command: >
+      npx cypress run
     volumes:
       - ./taxi/client/cypress:/app/cypress
       - ./taxi/client/cypress.json:/app/cypress.json
