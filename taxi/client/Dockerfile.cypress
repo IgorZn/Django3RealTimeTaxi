@@ -15,3 +15,4 @@ ENV CI=1
 # to avoid verifying again when running the tests
 
 RUN npx cypress verify
+RUN npm install --save-dev cypress-file-upload

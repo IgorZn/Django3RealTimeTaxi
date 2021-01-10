@@ -47,8 +47,10 @@ Create a new database and user with the following commands:
 > npx cypress run --spec cypress/integration/authentication.spec.js <br />
 
 ## Docker
+`ADD` -- similar OS copy command + you can use URL <br />
+`COPY` -- similar OS copy command <br />
 > docker rmi $(docker images -a -q) <br />
-docker rmi $(docker images -a | grep none | awk '{ print $3; }' <br />
+> docker rmi $(docker images -a | grep none | awk '{ print $3; }' <br />
 > docker-compose up -d <br />
 > docker-compose down <br />
 > docker-compose down && docker-compose up -d <br />
