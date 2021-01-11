@@ -14,7 +14,10 @@ function LogIn (props) {
     /*
     * We also defined a simple onSubmit() function that sets isSubmitted to true when invoked.
     * */
-    const onSubmit = (values, actions) => setSubmitted(true);
+    const onSubmit = (values, actions) => {
+        props.logIn(values.username, values.password);
+        setSubmitted(true);
+    };
 
     if (isSubmitted) {
         return <Redirect to='/' />;
