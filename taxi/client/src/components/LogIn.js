@@ -1,27 +1,20 @@
-import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import { Breadcrumb, Button, Card, Col, Form, Row} from 'react-bootstrap';
 
 function LogIn (props) {
     /*
-    * We added a hook to set the isSubmitted state,
-    * and we added a conditional statement to redirect
-    * the browser to the home page if the form is submitted.
-    * */
-    const [isSubmitted, setSubmitted] = useState(false);
-
-    /*
     * We also defined a simple onSubmit() function that sets isSubmitted to true when invoked.
     * */
-    const onSubmit = (values, actions) => {
-        props.logIn(values.username, values.password);
-        setSubmitted(true);
+    const onSubmit = async (values, actions) => {
+        try {
+            await props.logIn(values.username, values.password);
+        }
+        catch (error) {
+            console.error(error);
+        }
     };
-
-    if (isSubmitted) {
-        return <Redirect to='/' />;
-    }
 
     return (
         <Row>
