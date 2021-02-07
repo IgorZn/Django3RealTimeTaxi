@@ -47,8 +47,13 @@ Create a new database and user with the following commands:
 > npx cypress run --spec cypress/integration/authentication.spec.js <br />
 
 ## Docker
-`ADD` -- similar OS copy command + you can use URL <br />
-`COPY` -- similar OS copy command <br />
+* **FROM**: tells Docker what base image to use as a starting point.
+* **RUN**: executes commands inside the container.
+* **WORKDIR**: changes the active directory.
+* **USER**: changes the active user for the rest of the commands.
+* **EXPOSE**: tells Docker which ports should be mapped outside the container.
+* **CMD**: defines the command to run when the container starts.
+
 > docker rmi $(docker images -a -q) <br />
 > docker rmi $(docker images -a | grep none | awk '{ print $3; }' <br />
 > docker-compose up -d <br />
@@ -61,9 +66,11 @@ Create a new database and user with the following commands:
 > docker build . -t taxi-server:latest <br />
 > docker build . -t taxi-database:latest <br />
 > docker build . -t taxi-client <br />
+> docker build -f Dockerfile.client . -t igorzna/taxi-client <br />
 > docker run -d <br />
 > docker images <br />
 > docker run -it -d sample:dev -p 3001:3000 <br />
+> docker run -it -d igorzna/taxi-client:latest <br />
 
 ## Windows
 > mklink "symbol_linked_db.sqlite3" "..\server\taxi\db.sqlite3" <br />

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
+import socket
 import datetime
 from pathlib import Path
 
@@ -86,17 +87,28 @@ ASGI_APPLICATION = 'taxi.routing.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'taxi',
-        'USER': 'taxi',
-        'PASSWORD': 'taxi',
-        'HOST': 'localhost',
-        'PORT': '5433',
+if socket.gethostname() != 'Orion':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'taxi',
+            'USER': 'taxi',
+            'PASSWORD': 'taxi',
+            'HOST': 'taxi-database',
+            'PORT': '5432',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'taxi',
+            'USER': 'taxi',
+            'PASSWORD': 'taxi',
+            'HOST': 'localhost',
+            'PORT': '5433',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

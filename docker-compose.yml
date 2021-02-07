@@ -8,6 +8,7 @@ services:
     ports:
       - 6379:6379
 
+
   taxi-cypress:
     build:
       context: ./taxi/client
@@ -18,19 +19,59 @@ services:
       - ./taxi/client/cypress:/app/cypress
       - ./taxi/client/cypress.json:/app/cypress.json
 
+
+  taxi-server:
+    image: taxi-server
+    ports:
+      - 8001:8000
+    depends_on:
+      - taxi-redis
+      - taxi-database
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    volumes:
+      - ./taxi/server:/usr/src/app
+    env_file:
+      - ./taxi/server/dev.env
+    command: >
+      bash -c "ls -la &&
+      pwd &&
+      python manage.py runserver 0.0.0.0:8000"
+
+
   taxi-database:
     container_name: taxi-database
     image: igorzna/postgres:12.1-TAXI-APP
     ports:
       - 5433:5432
     volumes:
-      - ./taxi/server/taxi-database:/var/lib/postgresql/data
+      - ./taxi/taxi-database:/var/lib/postgresql/data
     environment:
       - PGDATABASE=taxi
       - PGUSER=taxi
       - PGPASSWORD=taxi
       - PGHOST=taxi-database
       - REDIS_URL=redis://taxi-redis:6379/0
+
+
+  taxi-client:
+    container_name: taxi-client
+    image: igorzna/taxi-client:latest
+    build:
+      context: ./taxi/client
+      dockerfile: Dockerfile.client
+    command: >
+      bash -c "ls -la &&
+      pwd &&
+      npm start"
+    volumes:
+      - ./taxi/client/src:/usr/src/app/src
+      - ./taxi/client/public:/usr/src/app/public
+    depends_on:
+      - taxi-server
+    ports:
+      - 3001:3000
 
 volumes:
   taxi-database:
