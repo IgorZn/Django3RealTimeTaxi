@@ -27,7 +27,7 @@ SECRET_KEY = 'zf2*%y-lgw*h^%)9r%w266@r%6z@^gi8rj249h#^tc=v8g-)^2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -146,7 +146,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/staticfiles/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 ROOT_URLCONF = 'taxi.urls'
 

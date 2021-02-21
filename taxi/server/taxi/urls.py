@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import socket
 from django.contrib import admin
 from django.urls import path, include
 from trips.views import SignUpView, LogInView
@@ -27,4 +28,7 @@ urlpatterns = [
     path('api/log_in/', LogInView.as_view(), name='log_in'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/trip/', include('trips.urls', 'trip',)),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+if socket.gethostname() == 'Orion':
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
