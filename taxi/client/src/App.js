@@ -12,6 +12,14 @@ import axios from 'axios';
 
 import './App.css';
 
+
+import Driver from './components/Driver.js';
+import Rider from './components/Rider.js';
+
+
+
+
+
 function App () {
     const [isLoggedIn, setLoggedIn] = useState(()=>{
         return window.localStorage.getItem('taxi.auth') !== null;
@@ -56,6 +64,14 @@ function App () {
             </Navbar>
             <Container className='pt-3'>
                 <Switch>
+                    <Route path='/driver' render={() => (
+                        <Driver />
+                    )} />
+
+                    <Route path='/rider' render={() => (
+                        <Rider />
+                    )} />
+
                     <Route exact path='/' render={() => (
                         <div className='middle-center'>
                             <h1 className='landing logo'>Taxi</h1>
@@ -77,6 +93,7 @@ function App () {
                             }
                         </div>
                     )} />
+
                     <Route path='/sign-up' render={() => (
                         isLoggedIn ? (
                             <Redirect to='/' />
@@ -84,6 +101,7 @@ function App () {
                             <SignUp />
                         )
                     )} />
+
                     <Route path='/log-in' render={() => (
                         isLoggedIn ? (
                             <Redirect to='/' />
@@ -91,6 +109,7 @@ function App () {
                             <LogIn logIn={logIn} />
                         )
                     )} />
+
                 </Switch>
             </Container>
         </>

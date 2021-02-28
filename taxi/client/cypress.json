@@ -1,6 +1,8 @@
 {
   "baseUrl": "http://192.168.108.1:3001",
   "env": {
+
+
     "credentials": {
       "username": "gary.cole@example.com",
       "password": "pAssw0rd"
@@ -11,6 +13,16 @@
       "password": "taxi",
       "database": "taxi",
       "port": "5432"
+    },
+    "driver": {
+      "username": "gary.cole@example.com",
+      "password": "pAssw0rd"
+    },
+    "rider": {
+      "username": "hugh.wells@example.com",
+      "password": "pAssw0rd"
     }
+
+
   }
 }

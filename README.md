@@ -32,12 +32,12 @@ Create a new database and user with the following commands:
 > http://localhost:8001/api/log_in/ <br />
 
 ### URLs
-> http://localhost:8080/#/
-> http://localhost:8080/#/log-in/
-> http://localhost:8080/#/sign-up/
-> http://localhost:8080/api/sign_up/
-> http://localhost:8080/api/log_in/
-> http://localhost:8080/admin/
+> http://localhost:8080/#/ <br />
+> http://localhost:8080/#/log-in/ <br />
+> http://localhost:8080/#/sign-up/ <br />
+> http://localhost:8080/api/sign_up/ <br />
+> http://localhost:8080/api/log_in/ <br />
+> http://localhost:8080/admin/ <br />
 
 ### React
 > http://localhost:3001 <br />
