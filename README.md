@@ -16,6 +16,9 @@ Create a new database and user with the following commands:
 `psql -U postgres` <br />
 `<WHAT EVER NAME> =# CREATE USER taxi WITH SUPERUSER CREATEDB CREATEROLE PASSWORD 'taxi';` <br />
 `<WHAT EVER NAME> =# CREATE DATABASE taxi OWNER taxi;` <br />
+`dropdb taxi` <br />
+`psql -f taxi.sql` <br />
+`pg_dump taxi > taxi.bak` <br />
 
 ### In my case
 
@@ -27,6 +30,14 @@ Create a new database and user with the following commands:
 ### Django
 > http://localhost:8001/api/sign_up/ <br />
 > http://localhost:8001/api/log_in/ <br />
+
+### URLs
+> http://localhost:8080/#/
+> http://localhost:8080/#/log-in/
+> http://localhost:8080/#/sign-up/
+> http://localhost:8080/api/sign_up/
+> http://localhost:8080/api/log_in/
+> http://localhost:8080/admin/
 
 ### React
 > http://localhost:3001 <br />
@@ -67,6 +78,7 @@ Create a new database and user with the following commands:
 > docker build . -t taxi-database:latest <br />
 > docker build . -t taxi-client <br />
 > docker build -f Dockerfile.client . -t igorzna/taxi-client <br />
+> docker build -f Dockerfile.cypress . -t django3realtimetaxi_taxi-cypress <br />
 > docker run -d <br />
 > docker images <br />
 > docker run -it -d sample:dev -p 3001:3000 <br />

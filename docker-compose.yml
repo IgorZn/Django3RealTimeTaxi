@@ -10,6 +10,7 @@ services:
 
 
   taxi-cypress:
+    image: django3realtimetaxi_taxi-cypress:latest
     build:
       context: ./taxi/client
       dockerfile: Dockerfile.cypress
@@ -50,6 +51,9 @@ services:
       - 5433:5432
     volumes:
       - ./taxi/taxi-database:/var/lib/postgresql/data
+      - taxi-db-bak:/var/db_bak
+#    command: >
+#      bash -c "pg_dump taxi > /var/db_bak/taxi.sql"
     environment:
       - PGDATABASE=taxi
       - PGUSER=taxi
@@ -93,5 +97,6 @@ services:
 
 volumes:
   taxi-database:
+  taxi-db-bak:
   media:
   static:
