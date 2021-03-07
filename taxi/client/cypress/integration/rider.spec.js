@@ -1,4 +1,23 @@
 describe('The rider dashboard', function () {
+
+    before(function () {
+        cy.fixture('data/users.json').then((users) => {
+            cy.task('tableInsert', {
+                table: 'trips_user', rows: users, truncate: true
+            })
+        });
+        cy.fixture('data/groups.json').then((groups) => {
+            cy.task('tableInsert', {
+                table: 'auth_group', rows: groups, truncate: true
+            })
+        });
+        cy.fixture('data/user_groups.json').then((groups) => {
+            cy.task('tableInsert', {
+                table: 'trips_user_groups', rows: groups, truncate: true
+            })
+        });
+    })
+
     it('Cannot be visited if the user is not a rider', function () {
         const { username, password } = Cypress.env('driver')
 

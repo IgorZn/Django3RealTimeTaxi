@@ -3,7 +3,7 @@ describe('The database client', function () {
     beforeEach(function () {
         cy.fixture('data/users.json').then((users) => {
             cy.task('tableInsert', {
-                table: 'trips_user', rows: users, truncate: false
+                table: 'trips_user', rows: users, truncate: true
             }).then((ids) => {
                 cy.wrap(ids).should('have.length', 1);
             });
@@ -42,7 +42,9 @@ describe('The database client', function () {
     //         cy.wrap(ids).should('have.length', 1);
     //     });
     // });
-
+    after(() => {
+        // runs once after all tests in the block
+    })
 
 
 });

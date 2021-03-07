@@ -15,10 +15,11 @@ services:
       context: ./taxi/client
       dockerfile: Dockerfile.cypress
     command: >
-      npx cypress run
+      bash -c "ls -la && npx cypress run"
     volumes:
       - ./taxi/client/cypress:/app/cypress
-      - ./taxi/client/cypress.json:/app/cypress.json
+      - ./taxi/client/cypress.cfg.json:/app/cypress.cfg.json
+      - ./taxi/client/cypress.cfg.docker.json:/app/cypress.cfg.docker.json
 
 
   taxi-server:
@@ -35,6 +36,7 @@ services:
       - ./taxi/server/taxi/:/usr/src/app/taxi/
       - media:/usr/src/app/media
       - static:/usr/src/app/static
+      - taxi-db-bak:/usr/src/app/db_bak
     env_file:
       - ./taxi/server/dev.env
     command: >

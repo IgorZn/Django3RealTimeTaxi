@@ -1,5 +1,15 @@
 const knex = require('knex');
 
+const fs = require("fs-extra");
+const path = require("path");
+
+function getConfigurationByFile(file) {
+    const pathToConfigFile = path.resolve(`cypress.cfg.${file}.json`);
+
+    return fs.readJson(pathToConfigFile);
+}
+
+
 module.exports = (on, config) => {
     on('task', {
         async tableTruncate ({ table }) {
@@ -27,4 +37,8 @@ module.exports = (on, config) => {
             return client.select().table(table);
         }
     });
+    const file = config.env.configFile || 'docker';
+
+    return getConfigurationByFile(file)
+
 }

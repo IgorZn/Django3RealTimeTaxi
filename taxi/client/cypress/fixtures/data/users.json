@@ -1,6 +1,30 @@
 [
   {
     "id": 1,
+    "username": "taxi-app_admin",
+    "password": "pbkdf2_sha256$216000$98qfSVH63IYo$mram+XuMNma+P9n5paJSplF/9xcgwRoB+4X+YRX36ag=",
+    "first_name": "Admin",
+    "last_name": "Taxi",
+    "email": "taxi-app_admin@taxi-app.com",
+    "date_joined": "2021-01-09 15:49:05.355420",
+    "is_staff": true,
+    "is_superuser": true,
+    "is_active": true
+  },
+  {
+    "id": 2,
+    "username": "taxi_app",
+    "password": "pbkdf2_sha256$216000$GUWmYTbg48fO$TsX+BIkhEjIkm4AMRMBGMDceRRveaa6oIr2v7kil4hw=",
+    "first_name": "Admin",
+    "last_name": "App",
+    "email": "taxi-app@taxi-app.com",
+    "date_joined": "2021-01-09 15:49:05.355420",
+    "is_staff": false,
+    "is_superuser": false,
+    "is_active": true
+  },
+  {
+    "id": 10,
     "username": "gary.cole@example.com",
     "password": "pbkdf2_sha256$216000$FDmXwVk19DiA$ONGIqhXK7Ijwml3PjP4/hjokdd6NezeWaC5GtvYR/i8=",
     "first_name": "Gary",
@@ -12,7 +36,7 @@
     "is_active": true
   },
   {
-    "id": 2,
+    "id": 20,
     "username": "hugh.wells@example.com",
     "password": "pbkdf2_sha256$216000$FDmXwVk19DiA$ONGIqhXK7Ijwml3PjP4/hjokdd6NezeWaC5GtvYR/i8=",
     "first_name": "Hugh",
