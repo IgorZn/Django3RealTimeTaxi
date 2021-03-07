@@ -1,7 +1,6 @@
 {
-  "baseUrl": "http://192.168.108.1:3001",
+  "baseUrl": "http://taxi-nginx",
   "env": {
-
 
     "credentials": {
       "username": "gary.cole@example.com",
@@ -22,7 +21,6 @@
       "username": "hugh.wells@example.com",
       "password": "pAssw0rd"
     }
-
 
   }
 }

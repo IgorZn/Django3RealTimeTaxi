@@ -1,5 +1,4 @@
 describe('The database client', function () {
-    // new
     beforeEach(function () {
         cy.fixture('data/users.json').then((users) => {
             cy.task('tableInsert', {
@@ -10,7 +9,6 @@ describe('The database client', function () {
         });
     });
 
-    // new
     it('can read data from a table', function () {
         cy.task('tableSelect', {
             table: 'trips_user'
