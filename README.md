@@ -83,6 +83,7 @@ Create a new database and user with the following commands:
 > docker images <br />
 > docker run -it -d sample:dev -p 3001:3000 <br />
 > docker run -it -d igorzna/taxi-client:latest <br />
+> docker-compose restart <SERVICE_NAME> <br />
 
 ## Windows
 > mklink "symbol_linked_db.sqlite3" "..\server\taxi\db.sqlite3" <br />
