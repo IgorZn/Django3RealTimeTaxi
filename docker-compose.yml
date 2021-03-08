@@ -11,6 +11,9 @@ services:
 
   taxi-cypress:
     image: django3realtimetaxi_taxi-cypress:latest
+    depends_on:
+      - taxi-server
+      - taxi-nginx
     build:
       context: ./taxi/client
       dockerfile: Dockerfile.cypress
