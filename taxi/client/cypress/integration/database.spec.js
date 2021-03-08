@@ -4,7 +4,7 @@ describe('The database client', function () {
             cy.task('tableInsert', {
                 table: 'trips_user', rows: users, truncate: true
             }).then((ids) => {
-                cy.wrap(ids).should('have.length', 1);
+                cy.wrap(ids).should('have.length', 4);
             });
         });
     });
@@ -13,7 +13,7 @@ describe('The database client', function () {
         cy.task('tableSelect', {
             table: 'trips_user'
         }).then((users) => {
-            cy.wrap(users).should('have.length', 1);
+            cy.wrap(users).should('have.length', 4);
         })
     });
 
