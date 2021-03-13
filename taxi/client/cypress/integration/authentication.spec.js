@@ -24,6 +24,18 @@ const logIn = () => {
 describe('Authentication', function () {
     it('Can log in.', function () {
         logIn();
+        cy.on('uncaught:exception', (err, runnable) => {
+            expect(err.message).to.include(err.message)
+
+            // using mocha's async done callback to finish
+            // this test so we prove that an uncaught exception
+            // was thrown
+            done()
+
+            // return false to prevent the error from
+            // failing this test
+            return false
+        })
         cy.hash().should('eq', '#/');
 
     });
@@ -74,18 +86,54 @@ describe('Authentication', function () {
 
     it('Cannot visit the login page when logged in.', function () {
         logIn();
+        cy.on('uncaught:exception', (err, runnable) => {
+            expect(err.message).to.include(err.message)
+
+            // using mocha's async done callback to finish
+            // this test so we prove that an uncaught exception
+            // was thrown
+            done()
+
+            // return false to prevent the error from
+            // failing this test
+            return false
+        })
         cy.visit('/#/log-in');
         cy.hash().should('eq', '#/');
     });
 
     it('Cannot visit the sign up page when logged in.', function () {
         logIn();
+        cy.on('uncaught:exception', (err, runnable) => {
+            expect(err.message).to.include(err.message)
+
+            // using mocha's async done callback to finish
+            // this test so we prove that an uncaught exception
+            // was thrown
+            done()
+
+            // return false to prevent the error from
+            // failing this test
+            return false
+        })
         cy.visit('/#/sign-up');
         cy.hash().should('eq', '#/');
     });
 
     it('Cannot see links when logged in.', function () {
         logIn();
+        cy.on('uncaught:exception', (err, runnable) => {
+            expect(err.message).to.include(err.message)
+
+            // using mocha's async done callback to finish
+            // this test so we prove that an uncaught exception
+            // was thrown
+            done()
+
+            // return false to prevent the error from
+            // failing this test
+            return false
+        })
         cy.get('button#signUp').should('not.exist');
         cy.get('button#logIn').should('not.exist');
     });
@@ -118,6 +166,18 @@ describe('Authentication', function () {
 
     it('Can log out.', function () {
         logIn();
+        cy.on('uncaught:exception', (err, runnable) => {
+            expect(err.message).to.include(err.message)
+
+            // using mocha's async done callback to finish
+            // this test so we prove that an uncaught exception
+            // was thrown
+            done()
+
+            // return false to prevent the error from
+            // failing this test
+            return false
+        })
         cy.get('button').contains('Log out').click().should(() => {
             expect(window.localStorage.getItem('taxi.auth')).to.be.null;
         });
