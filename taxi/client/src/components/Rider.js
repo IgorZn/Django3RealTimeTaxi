@@ -4,7 +4,7 @@ import { Breadcrumb, Card, Col, Row } from 'react-bootstrap';
 import TripCard from './TripCard';
 import { Redirect } from 'react-router-dom';
 import { isRider } from '../services/AuthService';
-import { getTrips } from '../services/TripService'; // new
+import { getTrips } from '../services/TripService';
 
 
 
