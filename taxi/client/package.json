@@ -22,7 +22,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress:local": "npx cypress open --browser firefox --config-file cypress.local.json"
   },
   "eslintConfig": {
     "extends": [
@@ -45,6 +46,7 @@
   "devDependencies": {
     "cypress": "^6.2.1",
     "cypress-file-upload": "^4.1.1",
+    "eslint-plugin-react": "^7.22.0",
     "knex": "^0.21.18",
     "pg": "^8.5.1"
   }

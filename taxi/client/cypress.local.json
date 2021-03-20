@@ -1,0 +1,26 @@
+{
+  "baseUrl": "http://localhost:8080",
+  "env": {
+
+    "credentials": {
+      "username": "gary.cole@example.com",
+      "password": "pAssw0rd"
+    },
+    "database": {
+      "host": "taxi-database",
+      "user": "taxi",
+      "password": "taxi",
+      "database": "taxi",
+      "port": "5433"
+    },
+    "driver": {
+      "username": "gary.cole@example.com",
+      "password": "pAssw0rd"
+    },
+    "rider": {
+      "username": "hugh.wells@example.com",
+      "password": "pAssw0rd"
+    }
+
+  }
+}

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Breadcrumb, Card, Col, Row } from 'react-bootstrap';
+import { Breadcrumb, Col, Row } from 'react-bootstrap';
 
+import { Redirect } from 'react-router-dom';
 import TripCard from './TripCard';
 import { getTrips } from '../services/TripService';
-import { Redirect } from 'react-router-dom';
 import { isDriver } from '../services/AuthService';
 
 function Driver (props) {

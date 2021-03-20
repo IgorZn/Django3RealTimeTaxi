@@ -6,7 +6,7 @@ import SignUp from './components/SignUp';
 import LogIn from './components/LogIn';
 import { isDriver, isRider } from './services/AuthService';
 
-import { Button, Container, Form, Nav, Navbar } from 'react-bootstrap';
+import { Button, Container, Form, Navbar } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import axios from 'axios';

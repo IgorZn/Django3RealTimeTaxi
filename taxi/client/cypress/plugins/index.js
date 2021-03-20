@@ -9,6 +9,7 @@ module.exports = (on, config) => {
             });
             return client.raw(`TRUNCATE ${table} RESTART IDENTITY CASCADE`);
         },
+
         async tableInsert ({ table, rows, truncate }) {
             const client = await knex({
                 client: 'pg',
@@ -19,6 +20,21 @@ module.exports = (on, config) => {
             }
             return client.insert(rows, ['id']).into(table);
         },
+
+        async tableDeleteUser (username) {
+            // knex('accounts')
+            //   .where('activated', false)
+            //   .del()
+            // Outputs:
+            // delete from `accounts` where `activated` = false
+
+            const client = await knex({
+                client: 'pg',
+                connection: config.env.database
+            });
+            return client('username').where('username', username).del();
+        },
+
         async tableSelect ({ table }) {
             const client = await knex({
                 client: 'pg',

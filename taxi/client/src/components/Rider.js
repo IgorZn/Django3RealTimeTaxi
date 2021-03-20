@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Breadcrumb, Card, Col, Row } from 'react-bootstrap';
+import { Breadcrumb, Col, Row } from 'react-bootstrap';
 
 import TripCard from './TripCard';
 import { Redirect } from 'react-router-dom';

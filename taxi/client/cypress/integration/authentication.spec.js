@@ -22,25 +22,10 @@ const logIn = () => {
 };
 
 describe('Authentication', function () {
-    it('Can log in.', function () {
-        logIn();
-        cy.on('uncaught:exception', (err, runnable) => {
-            expect(err.message).to.include(err.message)
-
-            // using mocha's async done callback to finish
-            // this test so we prove that an uncaught exception
-            // was thrown
-            done()
-
-            // return false to prevent the error from
-            // failing this test
-            return false
-        })
-        cy.hash().should('eq', '#/');
-
-    });
-
     it('Can sign up.', function () {
+        const { username, password } = Cypress.env('credentials');
+        cy.task('tableDeleteUser', username)
+
         cy.server();
         cy.route({
             method: 'POST',
@@ -82,6 +67,24 @@ describe('Authentication', function () {
         cy.get('button').contains('Sign up').click();
         cy.wait('@signUp'); // new
         cy.hash().should('eq', '#/log-in');
+    });
+
+    it('Can log in.', function () {
+        logIn();
+        cy.on('uncaught:exception', (err, runnable) => {
+            expect(err.message).to.include(err.message)
+
+            // using mocha's async done callback to finish
+            // this test so we prove that an uncaught exception
+            // was thrown
+            done()
+
+            // return false to prevent the error from
+            // failing this test
+            return false
+        })
+        cy.hash().should('eq', '#/');
+
     });
 
     it('Cannot visit the login page when logged in.', function () {
