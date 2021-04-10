@@ -7,7 +7,7 @@
       "password": "pAssw0rd"
     },
     "database": {
-      "host": "taxi-database",
+      "host": "localhost",
       "user": "taxi",
       "password": "taxi",
       "database": "taxi",

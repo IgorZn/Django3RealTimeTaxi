@@ -22,20 +22,29 @@ module.exports = (on, config) => {
         },
 
         async tableDeleteUser (username) {
-            // knex('accounts')
-            //   .where('activated', false)
-            //   .del()
-            // Outputs:
-            // delete from `accounts` where `activated` = false
-
             const client = await knex({
                 client: 'pg',
                 connection: config.env.database
             });
-            return client('username').where('username', username).del();
+            const run = new Promise(function(resolve, reject) {
+                client.raw(`DELETE FROM trips_user_groups WHERE user_id = 10`)
+                client.raw(`DELETE FROM trips_user WHERE username = ${username}`)
+                resolve(null)
+            })
+
+
+            return run.then(result => result)
         },
 
         async tableSelect ({ table }) {
+            const client = await knex({
+                client: 'pg',
+                connection: config.env.database
+            });
+            return client.select().table(table);
+        },
+
+        async tableSelectUser ({ table, username }) {
             const client = await knex({
                 client: 'pg',
                 connection: config.env.database
