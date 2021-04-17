@@ -1,7 +1,6 @@
 {
   "baseUrl": "http://taxi-nginx",
   "env": {
-
     "credentials": {
       "username": "gary.cole@example.com",
       "password": "pAssw0rd"
@@ -21,6 +20,6 @@
       "username": "hugh.wells@example.com",
       "password": "pAssw0rd"
     }
-
-  }
+  },
+  "projectId": "fjxuii"
 }

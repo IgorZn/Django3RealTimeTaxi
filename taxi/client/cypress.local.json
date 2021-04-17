@@ -1,7 +1,8 @@
 {
   "baseUrl": "http://localhost:8080",
+  "video": true,
+  "projectId": "bdyykt",
   "env": {
-
     "credentials": {
       "username": "gary.cole@example.com",
       "password": "pAssw0rd"
@@ -21,6 +22,6 @@
       "username": "hugh.wells@example.com",
       "password": "pAssw0rd"
     }
-
   }
+
 }

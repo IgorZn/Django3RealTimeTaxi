@@ -58,8 +58,8 @@ services:
     volumes:
       - ./taxi/taxi-database:/var/lib/postgresql/data
       - taxi-db-bak:/var/db_bak
-#    command: >
-#      bash -c "pg_dump taxi > /var/db_bak/taxi.sql"
+    command: >
+      bash -c "pg_resetwal -f /var/lib/postgresql/data"
     environment:
       - PGDATABASE=taxi
       - PGUSER=taxi

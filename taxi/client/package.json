@@ -23,7 +23,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cypress:local": "npx cypress open --browser firefox --config-file cypress.local.json"
+    "cypress:local": "npx cypress open --browser firefox --config-file cypress.local.json",
+    "cypress:dashbrd": "npx cypress run --browser firefox --config-file cypress.local.json --record --key a33bb83b-ccb2-4faa-bbfc-4a5e2696d729"
   },
   "eslintConfig": {
     "extends": [
