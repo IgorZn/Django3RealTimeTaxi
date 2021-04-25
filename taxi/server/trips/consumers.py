@@ -182,7 +182,6 @@ class TaxiConsumer(AsyncJsonWebsocketConsumer):
 			'data': trip_data
 		})
 
-
 	async def echo_message(self, message):
 		print('echo_message__message', message)
 		await self.send_json(message)
