@@ -4,7 +4,7 @@ import { Breadcrumb, Col, Row } from 'react-bootstrap';
 import TripCard from './TripCard';
 import { getTrips } from '../services/TripService';
 
-function DriverDashboard (props) {
+function RiderDashboard (props) {
     const [trips, setTrips] = useState([]);
 
     useEffect(() => {
@@ -21,21 +21,19 @@ function DriverDashboard (props) {
 
     const getCurrentTrips = () => {
         return trips.filter(trip => {
-            return trip.driver !== null && trip.status !== 'COMPLETED';
+            return (
+                trip.driver !== null &&
+                trip.status !== 'REQUESTED' &&
+                trip.status !== 'COMPLETED'
+            );
         });
-    }
-
-    const getRequestedTrips = () => {
-        return trips.filter(trip => {
-            return trip.status === 'REQUESTED';
-        });
-    }
+    };
 
     const getCompletedTrips = () => {
         return trips.filter(trip => {
             return trip.status === 'COMPLETED';
         });
-    }
+    };
 
     return (
         <Row>
@@ -48,22 +46,15 @@ function DriverDashboard (props) {
                 <TripCard
                     title='Current Trip'
                     trips={getCurrentTrips()}
-                    group='driver'
-                    otherGroup='rider'
-                />
-
-                <TripCard
-                    title='Requested Trips'
-                    trips={getRequestedTrips()}
-                    group='driver'
-                    otherGroup='rider'
+                    group='rider'
+                    otherGroup='driver'
                 />
 
                 <TripCard
                     title='Recent Trips'
                     trips={getCompletedTrips()}
-                    group='driver'
-                    otherGroup='rider'
+                    group='rider'
+                    otherGroup='driver'
                 />
 
             </Col>
@@ -71,4 +62,4 @@ function DriverDashboard (props) {
     );
 }
 
-export default DriverDashboard;
+export default RiderDashboard;
