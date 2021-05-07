@@ -12,7 +12,8 @@ export const getUser = () => {
     const auth = JSON.parse(window.localStorage.getItem('taxi.auth'));
     if (auth) {
         const [,payload,] = auth.access.split('.');
-        const decoded = window.atob(payload);
+        const decoded = window.atob(payload.replace(/\s/g, ''))
+        console.log('decoded', decoded)
         return JSON.parse(decoded);
     }
     return undefined;

@@ -87,7 +87,7 @@ describe('Authentication', function () {
 
     });
 
-    it('Can log out.', function () {
+    it.only('Can log out.', function () {
         logIn();
         cy.on('uncaught:exception', (err, runnable) => {
             expect(err.message).to.include(err.message)
@@ -101,7 +101,7 @@ describe('Authentication', function () {
             // failing this test
             return false
         })
-        cy.get('button').contains('Log out').click()
+        cy.get('btn').contains('Log out').click()
         // cy.get('button').contains('Log out').click().should(() => {
         //     expect(window.localStorage.getItem('taxi.auth')).to.be.null;
         // });
